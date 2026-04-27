@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.exe
+*.bin
+config-*.json
+.env
+.DS_Store
+frontend/node_modules/
+frontend/dist/

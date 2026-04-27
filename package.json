@@ -1,0 +1,20 @@
+{
+  "name": "axl-agent-town",
+  "version": "1.0.0",
+  "description": "Decentralized Multi-Agent Simulation on AXL P2P Node",
+  "main": "start_simulation.py",
+  "scripts": {
+    "dev": "echo \"Please run 'npm run dev:sim' in one terminal and 'npm run dev:frontend' in another.\" && exit 1",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:sim": "python start_simulation.py",
+    "test:axl": "python test_axl.py"
+  },
+  "keywords": [
+    "AXL",
+    "P2P",
+    "Gensyn",
+    "Agents"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}
