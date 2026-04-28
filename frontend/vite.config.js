@@ -9,7 +9,12 @@ export default defineConfig({
       '/axl': {
         target: 'http://localhost:9092',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/axl/, '')
+        rewrite: (path) => path.replace(/^\/axl/, ''),
+        configure: (proxy) => {
+          proxy.on('error', (err) => {
+            console.log('proxy error', err);
+          });
+        }
       }
     }
   }

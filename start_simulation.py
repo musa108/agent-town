@@ -10,7 +10,7 @@ NUM_AGENTS = 4
 BASE_API_PORT = 9002
 BASE_TCP_PORT = 7002
 GENSYN_PROJECT_DIR = os.getcwd()
-AXL_BINARY = os.path.join(GENSYN_PROJECT_DIR, "axl-source", "node.exe")
+AXL_BINARY = os.path.join(GENSYN_PROJECT_DIR, "axl-source", "node.exe" if os.name == 'nt' else "node")
 
 processes = []
 

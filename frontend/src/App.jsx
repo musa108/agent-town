@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const OBSERVER_API = '/axl';
+// Use environment variable for production, fallback to proxy for local dev
+const OBSERVER_API = import.meta.env.VITE_AXL_API_URL || '/axl';
 
 const AgentTown = () => {
   const [agents, setAgents] = useState({});
