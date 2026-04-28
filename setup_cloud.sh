@@ -7,7 +7,7 @@ pip install -r requirements.txt
 cd axl-source
 if [ ! -f "node" ]; then
     echo "Building AXL binary..."
-    go build -o node .
+    go build -o node ./cmd/node
 fi
 cd ..
 
