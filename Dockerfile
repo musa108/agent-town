@@ -20,5 +20,8 @@ RUN cd axl-source && go build -o node .
 # Expose the Observer API port (Hugging Face default is 7860)
 EXPOSE 7860
 
-# Command to run the simulation
-CMD ["python3", "start_simulation.py"]
+# Set permissions for the startup script
+RUN chmod +x run.sh
+
+# Command to run the simulation and proxy
+CMD ["./run.sh"]

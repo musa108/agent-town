@@ -60,7 +60,7 @@ def main():
         return
 
     # 1. Start Observer AXL node
-    obs_api_port = int(os.environ.get("PORT", 7860))
+    obs_api_port = 9092
     obs_mesh_port = 8092
     start_axl_node(obs_api_port, obs_mesh_port, "config-observer.json")
     
