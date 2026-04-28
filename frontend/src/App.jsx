@@ -165,51 +165,46 @@ const AgentTown = () => {
   }, [agents]);
 
   return (
-    <div style={{ display: 'flex', height: '100vh', padding: '20px', gap: '20px' }}>
-      {/* Sidebar: Logs & Stats */}
-      <div className="glass" style={{ width: '30%', padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        <div style={{ borderBottom: '1px solid var(--glass-border)', paddingBottom: '10px' }}>
-          <h1 style={{ fontSize: '24px', color: 'var(--accent-color)', marginBottom: '4px' }}>AXL Agent Town</h1>
-          <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Decentralized Mesh Simulation</p>
+    <div className="app-container">
+      <div className="sidebar glass">
+        <div>
+          <h1 style={{ fontFamily: 'Outfit', fontSize: '2rem', marginBottom: '0.5rem', background: 'linear-gradient(45deg, #00f2ff, #7000ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            AXL Agent Town
+          </h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            A sovereign multi-agent mesh powered by Gensyn AXL.
+          </p>
         </div>
 
-        <div style={{ flex: 1, overflowY: 'auto' }}>
-          <h3 style={{ fontSize: '14px', textTransform: 'uppercase', marginBottom: '12px', color: 'var(--text-secondary)' }}>Town Activity</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {logs.length === 0 && <p style={{ fontSize: '12px', opacity: 0.5 }}>Waiting for mesh traffic...</p>}
-            {logs.map(log => (
-              <div key={log.id} style={{ 
-                fontSize: '13px', 
-                lineHeight: '1.4',
-                padding: log.isPayment ? '8px' : '0',
-                background: log.isPayment ? 'rgba(255, 215, 0, 0.1)' : 'transparent',
-                borderRadius: '4px',
-                borderLeft: log.isPayment ? '2px solid #FFD700' : 'none'
-              }}>
-                <span style={{ fontWeight: 'bold', color: log.isPayment ? '#FFD700' : 'var(--accent-color)' }}>{log.from}: </span>
-                <span style={{ color: log.isPayment ? '#eee' : 'inherit' }}>{log.content}</span>
-                <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>{log.timestamp}</div>
-              </div>
-            ))}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '15px', overflow: 'hidden' }}>
+          <h3 style={{ fontSize: '1rem', color: 'var(--accent-color)', textTransform: 'uppercase', letterSpacing: '1px' }}>Town Activity</h3>
+          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px', paddingRight: '10px' }}>
+            {logs.length === 0 ? (
+              <p style={{ color: 'var(--text-secondary)', fontStyle: 'italic', fontSize: '0.85rem' }}>Waiting for mesh...</p>
+            ) : (
+              logs.map(log => (
+                <div key={log.id} className="glass" style={{ padding: '10px', fontSize: '0.85rem', borderLeft: log.isPayment ? '3px solid #ffd700' : '1px solid var(--glass-border)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <span style={{ fontWeight: '600', color: log.isPayment ? '#ffd700' : 'var(--accent-color)' }}>{log.from}</span>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>{log.timestamp}</span>
+                  </div>
+                  <p style={{ color: '#eee', lineHeight: '1.4' }}>{log.content}</p>
+                </div>
+              ))
+            )}
           </div>
         </div>
 
-        <div className="glass" style={{ padding: '15px', background: 'rgba(0,0,0,0.2)' }}>
-          <h3 style={{ fontSize: '14px', marginBottom: '8px' }}>Mesh Status</h3>
-          <div style={{ fontSize: '12px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span>Active Agents:</span>
-              <span style={{ color: 'var(--accent-color)' }}>{Object.keys(agents).length}</span>
-            </div>
-          </div>
+        <div className="glass" style={{ padding: '15px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+          <strong>P2P Mesh Status:</strong><br />
+          {Object.keys(agents).length} Active Autonomous Peers
         </div>
       </div>
 
-      {/* Main View: Map */}
-      <div className="glass" style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-        <canvas ref={canvasRef} style={{ width: '100%', height: '100%' }} />
+      <div className="map-view glass">
+        <canvas ref={canvasRef} style={{ width: '100%', height: '100%', display: 'block' }} />
         <div style={{ position: 'absolute', bottom: '20px', right: '20px', fontSize: '10px', opacity: 0.5 }}>
-          AXL Node: localhost:9092
+          AXL Node: {OBSERVER_API}
         </div>
       </div>
     </div>

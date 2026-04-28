@@ -39,3 +39,45 @@ h1, h2, h3 {
 #root {
   height: 100%;
 }
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  padding: 20px;
+  gap: 20px;
+}
+
+.sidebar {
+  width: 30%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 320px;
+}
+
+.map-view {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  body {
+    overflow: auto;
+    height: auto;
+  }
+  .app-container {
+    flex-direction: column-reverse;
+    height: auto;
+    min-height: 100vh;
+  }
+  .sidebar {
+    width: 100%;
+    min-width: 0;
+  }
+  .map-view {
+    height: 60vh;
+    flex: none;
+  }
+}
