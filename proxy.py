@@ -21,8 +21,11 @@ def proxy(path):
         else:
             resp = requests.post(url, data=request.data, headers=request.headers, timeout=5)
             
-        # Return the response back to the browser
-        return Response(resp.content, resp.status_code, resp.headers.items())
+        # Force JSON content type so the browser doesn't get confused
+        headers = dict(resp.headers)
+        headers['Content-Type'] = 'application/json'
+        
+        return Response(resp.content, resp.status_code, headers.items())
     except Exception as e:
         return f"Proxy Error: {str(e)}", 502
 

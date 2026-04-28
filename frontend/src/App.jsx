@@ -18,6 +18,7 @@ const AgentTown = () => {
           if (!text) return;
           try {
             const data = JSON.parse(text);
+            console.log("Mesh Data Received:", data);
             
             if (data.type === 'status_update') {
               setAgents(prev => ({
@@ -51,8 +52,8 @@ const AgentTown = () => {
                 return next;
               });
             }
-          } catch {
-            /* Ignore JSON parse errors from malformed mesh packets */
+          } catch (e) {
+            console.warn("Malformed mesh packet:", text, e);
           }
         }
       } catch {
