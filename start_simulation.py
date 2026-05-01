@@ -14,15 +14,16 @@ AXL_BINARY = os.path.join(GENSYN_PROJECT_DIR, "axl-source", "node.exe" if os.nam
 
 processes = []
 
-def start_axl_node(api_port, mesh_port, config_name, peer_port=None):
+def start_axl_node(api_port, mesh_port, config_name, peer_ports=None):
     config = {
         "api_port": api_port,
         "tcp_port": 7000, # Unified virtual port for mesh-wide A2A
         "Listen": [f"tls://127.0.0.1:{mesh_port}"],
         "Peers": []
     }
-    if peer_port:
-        config["Peers"].append(f"tls://127.0.0.1:{peer_port}")
+    if peer_ports:
+        for p in peer_ports:
+            config["Peers"].append(f"tls://127.0.0.1:{p}")
     
     config_path = os.path.join(GENSYN_PROJECT_DIR, config_name)
     with open(config_path, "w") as f:
@@ -87,7 +88,13 @@ def main():
     ]
 
     for i, (name, emoji, api_port, mesh_port) in enumerate(agents_data):
-        start_axl_node(api_port, mesh_port, f"config-agent-{i}.json", peer_port=obs_mesh_port)
+        # Every node connects to the observer
+        peers = [obs_mesh_port]
+        # And let's connect every other node to the previous node to make a chain + hub mesh
+        if i > 0:
+            peers.append(agents_data[i-1][3])
+            
+        start_axl_node(api_port, mesh_port, f"config-agent-{i}.json", peer_ports=peers)
         time.sleep(3) 
         start_agent(name, emoji, api_port, observer_id)
 

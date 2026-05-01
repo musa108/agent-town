@@ -22,7 +22,7 @@ class Agent:
 
     def get_node_id(self):
         try:
-            response = requests.get(f"{self.axl_url}/topology", timeout=2)
+            response = requests.get(f"{self.axl_url}/topology", timeout=5)
             if response.status_code == 200:
                 self.node_id = response.json().get("our_public_key")
                 print(f"[{self.name}] Started with node ID: {self.node_id}")
@@ -110,6 +110,7 @@ class Agent:
             peers = [n["public_key"] for n in nodes if n["public_key"] not in [self.node_id, self.observer_id]]
             
             if peers and self.balance > 10:
+                print(f"[{self.name}] Found {len(peers)} peers. Initiating trade...")
                 target = random.choice(peers)
                 amount = random.randint(5, 15)
                 items = ["Coffee ☕", "Information 📜", "Mesh-Key 🔑", "Digital Art 🎨", "Protection 🛡️"]
@@ -150,11 +151,11 @@ class Agent:
         self.y = max(0, min(1, self.y + random.uniform(-0.05, 0.05)))
         
         # 2. Occasional socializing
-        if random.random() < 0.2:
+        if random.random() < 0.4:
             self.socialize()
             
         # 3. Occasional economic activity
-        if random.random() < 0.15:
+        if random.random() < 0.35:
             self.economic_interaction()
             
         # 4. Report to observer
